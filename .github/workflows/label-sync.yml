@@ -1,0 +1,50 @@
+name: Label sync
+
+# Apply the EasyScience unified label standard (crysta ADR-0046) to the project repos.
+# Manual only — labels change rarely, so this runs on demand, not on a schedule.
+#
+# Cross-repo note: the default GITHUB_TOKEN can only edit THIS repo's labels. Editing
+# labels on the sibling repos (crysta/edi/agent-os/templates) needs a Personal Access
+# Token with `repo` scope, stored as the repo/org secret LABELS_TOKEN (see README).
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'Single repo (owner/name); leave blank to sync all four project repos'
+        required: false
+        default: ''
+      dry_run:
+        description: 'Dry run (print the gh commands, change nothing)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Sync labels
+        env:
+          # PAT (classic, `repo` scope) — the default GITHUB_TOKEN cannot edit sibling repos.
+          GH_TOKEN: ${{ secrets.LABELS_TOKEN }}
+        run: |
+          set -euo pipefail
+          args=()
+          if [ -n "${{ inputs.repo }}" ]; then
+            args+=(--repo "${{ inputs.repo }}")
+          else
+            args+=(--all)
+          fi
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            args+=(--dry-run)
+          fi
+          python tools/update_github_labels.py "${args[@]}"
