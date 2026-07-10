@@ -1,14 +1,27 @@
 # enhantica/.github
 
 Org-wide GitHub configuration for [enhantica](https://github.com/enhantica) — shared
-defaults and automation that apply across the project repositories.
+defaults and automation that apply across the project repositories (the ORG-0023 umbrella).
+
+## What lives here
+
+- **`profile/README.md`** — the public organization landing page (*"Measured twice, built
+  once."*).
+- **Community health defaults** (inherited by every org repo that doesn't override them):
+  [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) (Contributor Covenant 2.1),
+  [`CONTRIBUTING.md`](CONTRIBUTING.md), [`SECURITY.md`](SECURITY.md) (private reporting),
+  [`SUPPORT.md`](SUPPORT.md), the default **issue forms** (`.github/ISSUE_TEMPLATE/` — bug ·
+  feature · question) and the **PR template** with the required-`[scope]`-label checklist.
+  Note the inheritance rules: a repo's own file overrides the default, and issue templates are
+  all-or-nothing per repo. `LICENSE`/`CODEOWNERS` cannot be defaulted — they ship per-repo.
+- **Labels-as-code** (below) — the unified label standard + its sync workflow.
 
 ## Labels-as-code
 
 A single source of truth for the **EasyScience unified labeling system** (org discussions
 [easyscience#33](https://github.com/orgs/easyscience/discussions/33) +
 [easyscience#49](https://github.com/orgs/easyscience/discussions/49)), applied identically
-across the four project repos. The decision/standard is recorded in crysta **ADR-0046**.
+across the enhantica fleet (`TARGET_REPOS` in the script — all ten repos). The decision/standard is recorded in crysta **ADR-0046**.
 
 **Label groups** (see `tools/update_github_labels.py` for the exact names/colors/descriptions):
 

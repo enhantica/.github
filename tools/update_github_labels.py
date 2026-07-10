@@ -32,12 +32,20 @@ from dataclasses import dataclass
 # restricts to easyscience; the project's four repos live under enhantica.
 ALLOWED_ORGS = {'enhantica', 'easyscience'}
 
-# The four project repositories the standard applies to (ADR-0046).
+# The enhantica fleet the standard applies to (ADR-0046 / ORG-0005; extended per AUD-11).
+# NOTE: if LABELS_TOKEN is the fine-grained PAT (ORG-0010), its resource list must cover
+# every repo below; the classic `repo`-scope variant needs no change.
 TARGET_REPOS = [
     'enhantica/crysta',
     'enhantica/edi',
-    'enhantica/agent-os',
+    'enhantica/relay',      # renamed from agent-os 2026-07-10 (ORG-T04)
     'enhantica/templates',
+    'enhantica/org',
+    'enhantica/kempt',
+    'enhantica/drafterino',
+    'enhantica/badgery',
+    'enhantica/dashboard',
+    'enhantica/.github',
 ]
 
 
@@ -142,11 +150,8 @@ LABELS = [
         Colors.BOT,
         'Automated release PR. Excluded from changelog/versioning',
     ),
-    Label(
-        '[bot] backmerge',
-        Colors.BOT,
-        'Automated backmerge master → develop failed due to conflicts',
-    ),
+    # '[bot] backmerge' removed 2026-07-10 (AUD-12): its backmerge workflow was
+    # deleted org-wide by ORG-0003 (feature->main, no develop branch).
 ]
 
 # Per-repo extras layered on top of the shared LABELS (ADR-0046). `[bot] perf-accepted`
