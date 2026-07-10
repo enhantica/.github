@@ -1,0 +1,26 @@
+name: Bug report
+description: Something is broken or behaves incorrectly
+labels: ['[scope] bug']
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you do, what did you expect, what happened instead?
+      placeholder: Steps to reproduce, expected vs actual behaviour.
+    validations:
+      required: true
+  - type: textarea
+    id: env
+    attributes:
+      label: Environment
+      description: Version/commit, OS, install method — whatever is relevant.
+    validations:
+      required: false
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Logs, screenshots, minimal input files.
+    validations:
+      required: false
