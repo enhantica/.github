@@ -14,7 +14,7 @@ defaults and automation that apply across the project repositories (the ORG-0023
   feature · question) and the **PR template** with the required-`[scope]`-label checklist.
   Note the inheritance rules: a repo's own file overrides the default, and issue templates are
   all-or-nothing per repo. `LICENSE`/`CODEOWNERS` cannot be defaulted — they ship per-repo.
-- **Labels-as-code** (below) — the unified label standard + its sync workflow.
+- **Labels-as-code** (below) — the unified label standard and a script that applies it.
 
 ## Labels-as-code
 
@@ -43,9 +43,6 @@ required group label.
 
 ### Apply the labels
 
-**Via the workflow** (Actions → **Label sync** → *Run workflow*): leave `repo` blank to sync
-all four, or name one; tick `dry_run` to preview. Requires the `LABELS_TOKEN` secret below.
-
 **Locally:**
 
 ```bash
@@ -56,10 +53,3 @@ python tools/update_github_labels.py --repo enhantica/crysta
 
 Needs the `gh` CLI authenticated (`gh auth login`) with permission to edit labels on the
 target repos.
-
-### `LABELS_TOKEN` secret (for the workflow)
-
-A workflow's default `GITHUB_TOKEN` can only edit **this** repo's labels. To let the `Label
-sync` workflow edit the sibling repos, add a repo (or org) secret **`LABELS_TOKEN`**: a
-classic Personal Access Token with the **`repo`** scope (or a fine-grained token granting the
-four repos **Issues / Metadata: Read & write**).
